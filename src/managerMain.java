@@ -13,7 +13,7 @@ public class managerMain extends JFrame implements ActionListener {
         setTitle("관리자 모드");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(700, 450);
-        setLocationRelativeTo(null); // 화면 중앙에 표시
+        setLocationRelativeTo(null);
 
         JPanel panel = new JPanel();
         panel.setBackground(new Color(255, 248, 220));
@@ -38,11 +38,11 @@ public class managerMain extends JFrame implements ActionListener {
         updateMenu.setBounds(45, 221, 194, 129);
         panel.add(updateMenu);
         
-        JButton btnNewButton_3 = new JButton("매출 확인");
-        btnNewButton_3.setFont(new Font("휴먼둥근헤드라인", Font.PLAIN, 20));
-        btnNewButton_3.setBackground(new Color(222, 184, 135));
-        btnNewButton_3.setBounds(285, 220, 208, 130);
-        panel.add(btnNewButton_3);
+        JButton salesButton = new JButton("매출 확인");
+        salesButton.setFont(new Font("휴먼둥근헤드라인", Font.PLAIN, 20));
+        salesButton.setBackground(new Color(222, 184, 135));
+        salesButton.setBounds(285, 220, 208, 130);
+        panel.add(salesButton);
         
         JButton gotoInitialScreen = new JButton("처음으로");
         gotoInitialScreen.setBackground(new Color(222, 184, 135));
@@ -55,7 +55,7 @@ public class managerMain extends JFrame implements ActionListener {
             public void actionPerformed(ActionEvent e) {
                 InitialScreen initialScreen = new InitialScreen();
                 initialScreen.setVisible(true);
-                dispose(); // 현재 창 닫기
+                dispose();
             }
         });
         
@@ -83,6 +83,29 @@ public class managerMain extends JFrame implements ActionListener {
             public void actionPerformed(ActionEvent e) {
                 DeleteMenu deleteMenuDialog = new DeleteMenu(managerMain.this);
                 deleteMenuDialog.setVisible(true);
+            }
+        });
+
+       
+        salesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) { 
+                int totalSales = CardMain.getTotalSales() + PaymentFrame.getTotalSales();
+                JOptionPane.showMessageDialog(managerMain.this, "오늘의 매출은 " + totalSales + "원 입니다.");
+            }
+        });
+
+        
+        salesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) { 
+                int totalSales = CardMain.getTotalSales() + PaymentFrame.getTotalSales();
+                int cardSales = CardMain.getTotalSales();
+                int cashSales = PaymentFrame.getTotalSales();
+                JOptionPane.showMessageDialog(managerMain.this, 
+                    "총 매출: " + totalSales + "원\n" +
+                    "카드 매출: " + cardSales + "원\n" +
+                    "현금 매출: " + cashSales + "원");
             }
         });
 

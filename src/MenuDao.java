@@ -36,7 +36,7 @@ public class MenuDao {
 		ResultSet rs = null;
 
 		try {
-			conn = DriverManager.getConnection(url, id, pw); // Connection 객체 생성
+			conn = DriverManager.getConnection(url, id, pw);
 			String sql = "select * from menu where categorynum = ?";
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, categorynum);
@@ -54,7 +54,6 @@ public class MenuDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			// 자원 해제
 			try {
 				if (rs != null) rs.close();
 				if (ps != null) ps.close();

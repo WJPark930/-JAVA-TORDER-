@@ -24,15 +24,15 @@ public class DeleteMenu extends JDialog {
 
     public DeleteMenu(Frame parent) {
         super(parent, "메뉴 삭제", true);
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE); // 다이얼로그 닫힐 때 작업 설정
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setSize(400,300);
         setLocationRelativeTo(null);
         
         getContentPane().setBackground(new Color(255, 248, 220));
         getContentPane().setLayout(null);
         
-        menuList = new JComboBox<>(); // 수정: comboBox -> menuList
-        menuList.setBounds(96, 102, 191, 23); // 수정: comboBox -> menuList
+        menuList = new JComboBox<>();
+        menuList.setBounds(96, 102, 191, 23);
         getContentPane().add(menuList);
         
         deleteButton = new JButton("삭제 하기");
@@ -68,7 +68,7 @@ public class DeleteMenu extends JDialog {
             menuList.addItem(menu.getMenuname());
         }
 
-        // 삭제 버튼에 addActionListener 추가하여 선택한 메뉴를 데이터베이스에서 삭제하는 코드 작성
+        // 삭제 버튼에 addActionListener 추가하여 선택한 메뉴를 데이터베이스에서 삭제하는 작업
         deleteButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 int selectedIndex = menuList.getSelectedIndex();
@@ -91,10 +91,9 @@ public class DeleteMenu extends JDialog {
             }
         });
 
-        // 뒤로 가기 버튼에 addActionListener 추가하여 다이얼로그를 닫고 이전 화면으로 돌아가는 코드 작성
         gotoManagerMain.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                dispose(); // 다이얼로그 닫기
+                dispose(); 
             }
         });
     }

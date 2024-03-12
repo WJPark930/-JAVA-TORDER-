@@ -12,13 +12,12 @@ create table users (
     userPasswd varchar2(20) not null
 );
 
-userId 열은 사용자의 고유 식별자를 나타냅니다.
 userPasswd 열은 사용자의 비밀번호를 저장합니다.
 userId 열은 Cart 테이블의 userId 열과 외래 키(Foreign Key) 관계를 맺습니다.
 userId 열은 card 테이블의 userId 열과 외래 키(Foreign Key) 관계를 맺습니다.
 
 
--- 메뉴 테이블
+-- 메뉴 테이블 
 create table menu (
     menuId number primary key, --메뉴 고유 번호
     menuname varchar2(30), --메뉴 이름
@@ -28,35 +27,29 @@ create table menu (
     constraint fk_menu_category foreign key (categorynum) references category(categorynum)
 );
 
---menuname 열은 메뉴의 이름을 저장합니다.
---price 열은 메뉴의 가격을 저장합니다.
 --categorynum 열은 해당 메뉴의 카테고리를 나타내는데, 이는 Category 테이블의 categorynum 열과 외래 키(Foreign Key) 관계를 맺습니다.
 
 
 -- 음식카테고리 테이블
 create table category (
-    categorynum number PRIMARY KEY, --메뉴 카테고리 번호
+    categorynum number primary key, --메뉴 카테고리 번호
     categorymenu varchar2(15) not null
 );
 
---categorynum 열은 음식 카테고리의 고유 식별자를 나타냅니다.
 --categorymenu 열은 음식 카테고리의 이름을 저장합니다.
 
 
 -- 장바구니 테이블
 
-CREATE TABLE Cart (
-    cartId NUMBER PRIMARY KEY,
-    menuId NUMBER,
-    price NUMBER,
-    quantity NUMBER,
-    CONSTRAINT fk_cart_menu FOREIGN KEY (menuId) REFERENCES menu(menuId)
+create table Cart (
+    cartId number primary key,
+    menuId number, 
+    price number,
+    quantity number,
+    constraint fk_cart_menu foreign key (menuId) references menu(menuId)
 );
 
 --menuId 열은 장바구니에 담긴 메뉴의 고유 식별자를 나타냅니다. 이는 Menu 테이블의 menuId 열과 외래 키(Foreign Key) 관계를 맺습니다.
---menuName 열은 장바구니에 담긴 메뉴의 이름을 저장합니다.
---price 열은 장바구니에 담긴 메뉴의 가격을 저장합니다.
---quantity 열은 장바구니에 담긴 메뉴의 수량을 저장합니다.
 
 
 --카드 정보를 담는 테이블
@@ -66,36 +59,31 @@ create table card (
     cardType varchar2(20) not null, -- 회사
     expiryDate date not null, -- 유효 기간
     cvc varchar2(4) not null, -- 카드 보안 코드
-    CONSTRAINT fk_card_user foreign key (userId) references users(userId)
+    constraint fk_card_user foreign key (userId) references users(userId)
 );
 
-
---cardId 열은 카드의 고유 식별자를 나타냅니다.
 --userId 열은 카드 소유자의 사용자 식별자를 나타냅니다. 이는 Users 테이블의 userId 열과 외래 키(Foreign Key) 관계를 맺습니다.
---cardType 열은 카드의 종류(회사 등)를 저장합니다.
---expiryDate 열은 카드의 유효 기간을 나타냅니다.
---cvc 열은 카드의 보안 코드를 저장합니다.
 
 -----------------------------------------------------------------------------------------------------------
 
 --Users 테이블과 Cart 테이블 간의 관계:
---Users 테이블의 userId 열과 Cart 테이블의 userId 열 사이에 일대다(One-to-Many) 관계가 있습니다. 
+--Users 테이블의 userId 열과 Cart 테이블의 userId 열 사이에 일대다(One-to-Many) 관계 입니다. 
 --하나의 사용자는 여러 개의 장바구니 아이템을 가질 수 있습니다.
 
 --Users 테이블과 Card 테이블 간의 관계:
---Users 테이블의 userId 열과 Card 테이블의 userId 열 사이에 일대다(One-to-Many) 관계가 있습니다. 
+--Users 테이블의 userId 열과 Card 테이블의 userId 열 사이에 일대다(One-to-Many) 관계 입니다. 
 --하나의 사용자는 여러 개의 카드 정보를 가질 수 있습니다.
 
 --Menu 테이블과 Category 테이블 간의 관계:
---Menu 테이블의 categorynum 열과 Category 테이블의 categorynum 열 사이에 일대다(One-to-Many) 관계가 있습니다. 
+--Menu 테이블의 categorynum 열과 Category 테이블의 categorynum 열 사이에 일대다(One-to-Many) 관계 입니다. 
 --하나의 카테고리에는 여러 개의 메뉴가 속할 수 있습니다.
 
 --Cart 테이블과 Menu 테이블 간의 관계:
---Cart 테이블의 menuId 열과 Menu 테이블의 menuId 열 사이에 일대일(One-to-One) 관계가 있습니다. 
+--Cart 테이블의 menuId 열과 Menu 테이블의 menuId 열 사이에 일대일(One-to-One) 관계 입니다. 
 --장바구니에 담긴 각 항목은 메뉴의 고유 식별자를 참조합니다.
 
 --Card 테이블과 Users 테이블 간의 관계:
---Card 테이블의 userId 열과 Users 테이블의 userId 열 사이에 일대다(One-to-Many) 관계가 있습니다. 
+--Card 테이블의 userId 열과 Users 테이블의 userId 열 사이에 일대다(One-to-Many) 관계 입니다. 
 --하나의 사용자는 여러 개의 카드를 가질 수 있습니다.
 
 --테이블 레코드 insert 순서 

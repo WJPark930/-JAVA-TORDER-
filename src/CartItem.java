@@ -9,8 +9,8 @@ public class CartItem {
         this.totalPrice = menu.getPrice() * quantity;
     }
     
-    public CartItem(int totalPrice) { //이 생성자는 장바구니에 담긴 총 금액을 
-    	this.totalPrice = totalPrice; //결제하는 부분으로 가져가기 위한 생성자
+    public CartItem(int totalPrice) {  
+    	this.totalPrice = totalPrice; 
     }
 
     public MenuBean getMenu() {

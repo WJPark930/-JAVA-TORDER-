@@ -24,10 +24,10 @@ public class Signup extends JFrame implements ActionListener {
         registerButton = new JButton("가입하기");
         registerButton.setBackground(new Color(222, 184, 135));
 
-        // 사용자 정의 레이아웃 설정
+
         getContentPane().setLayout(null);
 
-        // 컴포넌트 위치 설정
+
         JLabel userIdLabel = new JLabel("아이디 입력:");
         userIdLabel.setFont(new Font("휴먼둥근헤드라인", Font.PLAIN, 12));
         userIdLabel.setBounds(69, 96, 79, 30);
@@ -40,7 +40,7 @@ public class Signup extends JFrame implements ActionListener {
 
         registerButton.setBounds(160, 200, 250, 30);
 
-        // 컴포넌트 추가
+
         getContentPane().add(userIdLabel);
         getContentPane().add(userIdField);
         getContentPane().add(passwordLabel);
@@ -60,11 +60,10 @@ public class Signup extends JFrame implements ActionListener {
         titleLabel.setBounds(69, 54, 321, 32);
         getContentPane().add(titleLabel);
 
-        // 이벤트 리스너 등록
+  
         registerButton.addActionListener(this);
-        backButton.addActionListener(this); // 뒤로 가기 버튼에 대한 이벤트 리스너 등록
+        backButton.addActionListener(this); 
 
-        // UsersDao 인스턴스 생성
         userDao = new UsersDao();
         userDao.connect();
     }
@@ -93,7 +92,7 @@ public class Signup extends JFrame implements ActionListener {
             // 뒤로 가기 버튼(backButton)을 눌렀을 때 Login 클래스 실행
             Login login = new Login();
             login.setVisible(true);
-            dispose(); // 현재 회원가입 창 닫기
+            dispose();
         }
     }
 

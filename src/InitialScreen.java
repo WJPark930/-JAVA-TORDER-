@@ -27,7 +27,7 @@ public class InitialScreen {
 	}
 
 	public void setVisible(boolean visible) {
-	    frame.setVisible(visible);
+		frame.setVisible(visible);
 	}
 
 	private void initialize() {
@@ -36,7 +36,7 @@ public class InitialScreen {
 		frame.setBounds(100, 100, 788, 529);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		 frame.setLocationRelativeTo(null); // 화면 중앙에 프레임 표시
+		frame.setLocationRelativeTo(null);
 
 		JButton restaurantButton = new JButton("매장 식사");
 		restaurantButton.setFont(new Font("휴먼둥근헤드라인", Font.PLAIN, 25));
@@ -72,7 +72,7 @@ public class InitialScreen {
 				// 매장 식사 버튼 클릭 시 TOrderMain 클래스 실행
 				TOrderMain tOrderMain = new TOrderMain();
 				tOrderMain.setVisible(true);
-				frame.dispose(); // 현재 화면 종료
+				frame.dispose();
 			}
 		});
 
@@ -81,20 +81,20 @@ public class InitialScreen {
 				// 포장 주문 버튼 클릭 시 TOrderMain 클래스 실행
 				TOrderMain tOrderMain = new TOrderMain();
 				tOrderMain.setVisible(true);
-				frame.dispose(); // 현재 화면 종료
+				frame.dispose();
 			}
 		});
-		
+
 		managerButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// 관리자 접속 버튼 클릭 시 로그인 창 화면 나오도록
+				// 관리자 접속 버튼 클릭 시 Login 클래스 실행
 				Login login = new Login();
 				login.setVisible(true);
 				frame.dispose();
 			}
-			
+
 		});
 
+		
 	}
-
 }

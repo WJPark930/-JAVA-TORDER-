@@ -24,7 +24,7 @@ public class TOrderMain extends JFrame implements ActionListener, PaymentFrame.P
 	private CategoryDao cdao;
 	private MenuDao mdao;
 	private CartDao cartDao;
-	
+
 
 	private HashMap<Integer, Integer> cart; // 장바구니 아이템을 담을 HashMap
 
@@ -40,8 +40,8 @@ public class TOrderMain extends JFrame implements ActionListener, PaymentFrame.P
 		udao = new UsersDao();
 		cdao = new CategoryDao();
 		mdao = new MenuDao();
-		cartDao = new CartDao(); // CartDao 초기화
-		
+		cartDao = new CartDao();
+
 
 		// 장바구니 초기화
 		cart = new HashMap<>();
@@ -62,14 +62,14 @@ public class TOrderMain extends JFrame implements ActionListener, PaymentFrame.P
 		// 메뉴 목록과 주문 버튼, 이벤트 참여 메뉴를 담는 패널 생성
 		JPanel menuPanel = new JPanel();
 		menuPanel.setBackground(new Color(255, 248, 220));
-		menuPanel.setLayout(null); // null 레이아웃으로 변경
+		menuPanel.setLayout(null);
 		menuPanel.setBounds(10, 60, 747, 342);
 
 		// 메뉴 목록 초기화
 		menuListModel = new DefaultListModel<>();
-		JScrollPane menuScrollPane = new JScrollPane(); // JScrollPane에 menuList 추가
-		menuScrollPane.setBounds(12, 70, 250, 250); // JScrollPane의 크기 조절
-		menuPanel.add(menuScrollPane); // JScrollPane을 menuPanel에 추가
+		JScrollPane menuScrollPane = new JScrollPane();
+		menuScrollPane.setBounds(12, 70, 250, 250);
+		menuPanel.add(menuScrollPane);
 		menuList = new JList<>(menuListModel);
 		menuScrollPane.setViewportView(menuList);
 		menuList.setBackground(new Color(255, 250, 240));
@@ -148,7 +148,7 @@ public class TOrderMain extends JFrame implements ActionListener, PaymentFrame.P
 			btnCategory[i].setBackground(new Color(222, 184, 135)); // 색상 지정
 			categoryPanel.add(btnCategory[i]);
 		}
-		getContentPane().add(categoryPanel); // 카테고리 패널을 프레임에 추가
+		getContentPane().add(categoryPanel);
 	}
 
 	public void onPaymentComplete(boolean cartCleared) { 
@@ -181,8 +181,8 @@ public class TOrderMain extends JFrame implements ActionListener, PaymentFrame.P
 		} else if (e.getSource() == orderViewButton) {
 			// 장바구니 보기 버튼 클릭 시 장바구니 리스트 출력
 			cartListModel.clear(); // 기존 장바구니 목록 초기화
-			totalQuantity = 0; // 총 수량을 저장할 변수 초기화
-			totalPrice = 0; // 총 가격을 저장할 변수 초기화
+			totalQuantity = 0;
+			totalPrice = 0;
 			for (int menuId : cart.keySet()) {
 				int quantity = cart.get(menuId);
 				MenuBean menu = mdao.getMenuById(menuId);
@@ -192,7 +192,7 @@ public class TOrderMain extends JFrame implements ActionListener, PaymentFrame.P
 				// 장바구니 목록에 메뉴와 수량 추가
 				cartListModel.addElement(new MenuBean(menu.getMenuId(), menu.getMenuname(), price, quantity));
 			}
-			// 총 수량과 총 가격을 문자열로 형식화하여 장바구니 목록의 마지막에 추가
+			// 총 수량과 총 가격을 문자열로 변환하여 장바구니 목록의 마지막에 추가
 			cartListModel.addElement(new MenuBean(-1, String.format("총 수량: %d, 총 가격: %d", totalQuantity, totalPrice), totalPrice, totalQuantity));
 		}
 
@@ -204,16 +204,16 @@ public class TOrderMain extends JFrame implements ActionListener, PaymentFrame.P
 		} else if (e.getSource() == payButton) {
 			// 결제 버튼 클릭 시 PaymentFrame 실행
 			int totalPriceInCart = calculateTotalPrice(); // 장바구니의 총 가격 계산
-			PaymentFrame paymentFrame = new PaymentFrame(totalPriceInCart, cartDao, this); // PaymentFrame에 PaymentCompleteListener 전달하여 생성
-			paymentFrame.setVisible(true); // PaymentFrame 실행
+			PaymentFrame paymentFrame = new PaymentFrame(totalPriceInCart, cartDao, this);
+			paymentFrame.setVisible(true);
 
 
 
 		} else if (e.getSource() == returnButton) {
-			// 처음으로 돌아가기 버튼 클릭 시 InitialScreen으로 이동
+			// 처음으로 돌아가기 버튼 클릭 시 InitialScreen 클래스 실행
 			InitialScreen initialScreen = new InitialScreen();
 			initialScreen.setVisible(true);
-			dispose(); // 현재 창 닫기
+			dispose();
 		} 
 
 		else {

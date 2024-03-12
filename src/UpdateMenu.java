@@ -181,12 +181,9 @@ public class UpdateMenu extends JDialog {
 
 
         
-        
-        // 뒤로 가기 버튼에 addActionListener 추가
         gotoManagerMain.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // 이전 화면인 managerMain을 생성하여 보여줌
                 managerMain managerMainScreen = new managerMain();
                 managerMainScreen.setVisible(true);
 

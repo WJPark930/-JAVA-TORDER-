@@ -29,7 +29,7 @@ public class CategoryDao {
 
 	public void connect(){
 		try {
-			conn = DriverManager.getConnection(url,id,pw); // 접속 객체 리턴
+			conn = DriverManager.getConnection(url,id,pw); 
 			System.out.println("접속 성공");
 		} catch (SQLException e) {
 			System.out.println("접속 실패");

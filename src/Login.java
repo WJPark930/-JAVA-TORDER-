@@ -7,7 +7,7 @@ public class Login extends JFrame implements ActionListener {
     private JTextField userIdField;
     private JPasswordField passwordField;
     private JButton loginButton;
-    private JButton signupButton; // 회원가입 버튼 추가
+    private JButton signupButton;
     private UsersDao userDao;
     private JButton backButton;
 
@@ -16,11 +16,10 @@ public class Login extends JFrame implements ActionListener {
         getContentPane().setBackground(new Color(255, 248, 220));
         setTitle("로그인");
         setSize(500, 300);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 프레임이 닫힐 때 프로그램 종료
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
 
-        // 컴포넌트 초기화
         userIdField = new JTextField();
         passwordField = new JPasswordField();
         loginButton = new JButton("로그인");
@@ -30,10 +29,9 @@ public class Login extends JFrame implements ActionListener {
         signupButton.setFont(new Font("휴먼둥근헤드라인", Font.PLAIN, 12));
         signupButton.setBackground(new Color(222, 184, 135));
 
-        // 사용자 정의 레이아웃 설정
+
         getContentPane().setLayout(null);
 
-        // 컴포넌트 위치 설정
         JLabel userIdLabel = new JLabel("아이디:");
         userIdLabel.setFont(new Font("휴먼둥근헤드라인", Font.PLAIN, 12));
         userIdLabel.setBounds(98, 80, 51, 30);
@@ -44,8 +42,8 @@ public class Login extends JFrame implements ActionListener {
         passwordLabel.setBounds(86, 120, 63, 30);
         passwordField.setBounds(162, 121, 250, 30);
 
-        loginButton.setBounds(162, 179, 100, 30); // 로그인 버튼 위치 수정
-        signupButton.setBounds(312, 179, 100, 30); // 회원가입 버튼 위치 설정
+        loginButton.setBounds(162, 179, 100, 30);
+        signupButton.setBounds(312, 179, 100, 30);
 
         // 컴포넌트 추가
         getContentPane().add(userIdLabel);
@@ -53,7 +51,7 @@ public class Login extends JFrame implements ActionListener {
         getContentPane().add(passwordLabel);
         getContentPane().add(passwordField);
         getContentPane().add(loginButton);
-        getContentPane().add(signupButton); // 회원가입 버튼 추가
+        getContentPane().add(signupButton);
 
         backButton = new JButton("뒤로 가기");
         backButton.setBackground(new Color(222, 184, 135));
@@ -63,8 +61,8 @@ public class Login extends JFrame implements ActionListener {
 
         // 이벤트 리스너 등록
         loginButton.addActionListener(this);
-        signupButton.addActionListener(this); // 회원가입 버튼에 대한 이벤트 리스너 등록
-        backButton.addActionListener(this); // 뒤로 가기 버튼에 대한 이벤트 리스너 등록
+        signupButton.addActionListener(this);
+        backButton.addActionListener(this);
 
         // UsersDao 인스턴스 생성
         userDao = new UsersDao();
@@ -82,14 +80,13 @@ public class Login extends JFrame implements ActionListener {
                 return;
             }
 
-            // 로그인 확인
+            //관리자 계정으로 접속
             if (userDao.loginUser(userId, userpassword)) {
                 if (userId.equals("wonjun") && userpassword.equals("4092")) {
-                    // managerMain 클래스 화면 표시
                     managerMain managerMain = new managerMain();
                     managerMain.setVisible(true);
 
-                    dispose(); // 현재 로그인 창 닫기
+                    dispose();
                 } else {
                     JOptionPane.showMessageDialog(this, "로그인 성공");
 
@@ -99,24 +96,22 @@ public class Login extends JFrame implements ActionListener {
 
                     if (randomMenu != null) {
                         JOptionPane.showMessageDialog(this,randomMenu.getMenuname() + " 당첨되셨습니다. 맛있게 드세요!");
-                        // TOrderMain 클래스 화면 표시
                         TOrderMain orderMain = new TOrderMain();
                         orderMain.setVisible(true);
 
-                        dispose(); // 현재 로그인 창 닫기
+                        dispose();
                     } else {
                         JOptionPane.showMessageDialog(this, "랜덤 메뉴 선택 실패. 다시 시도해주세요.");
                     }
                 }
             }
-        } else if (e.getSource() == signupButton) { // 회원가입 버튼을 눌렀을 때
+        } else if (e.getSource() == signupButton) {
             Signup signupForm = new Signup();
             signupForm.setVisible(true);
         } else if (e.getSource() == backButton) {
-            // 뒤로 가기 버튼을 눌렀을 때 TOrderMain 클래스 실행
             TOrderMain tOrderMain = new TOrderMain();
             tOrderMain.setVisible(true);
-            dispose(); // 현재 로그인 창 닫기
+            dispose();
         }
     }
 

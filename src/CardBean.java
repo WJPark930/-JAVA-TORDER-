@@ -2,7 +2,7 @@ public class CardBean {
     private String cardid;
     private String userid;
     private String cardtype;
-    private String expiryDate; // 변경 전: expiryda, 변경 후: expiryDate
+    private String expiryDate;
     private String cvc;
 	public String getCardid() {
 		return cardid;

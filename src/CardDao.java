@@ -29,7 +29,7 @@ public class CardDao {
     
     public void connect(){
         try {
-            conn = DriverManager.getConnection(url,id,pw); // 접속 객체 리턴
+            conn = DriverManager.getConnection(url,id,pw);
         } catch (SQLException e) {
             System.out.println("접속 실패");
             e.printStackTrace();
@@ -39,7 +39,7 @@ public class CardDao {
     // 카드 정보를 저장하는 메서드
     public void saveCard(CardBean card) {
         connect();
-        String sql = "insert into card (cardid, userid, cardtype, expirydate, cvc) VALUES (?, ?, ?, ?, ?)";
+        String sql = "insert into card (cardid, userid, cardtype, expirydate, cvc) values (?, ?, ?, ?, ?)";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, card.getCardid());
             ps.setString(2, card.getUserid());
