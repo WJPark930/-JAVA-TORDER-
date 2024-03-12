@@ -1,0 +1,167 @@
+3월13일 밤 11:59 까지 메일로 제출
+프로젝트 파일 압축해서 메일로 보내기
+프로젝트 안에 memo.txt(db 테이블) 꼭 포함
+프로젝트 실행영상 5분 안밖으로 녹화해서 보내기
+
+db파일
+----------------------------------------------------------------------------------------
+
+-- 고객 테이블
+create table users (
+    userId  varchar2(20) primary key, --주문자 번호
+    userPasswd varchar2(20) not null
+);
+
+userId 열은 사용자의 고유 식별자를 나타냅니다.
+userPasswd 열은 사용자의 비밀번호를 저장합니다.
+userId 열은 Cart 테이블의 userId 열과 외래 키(Foreign Key) 관계를 맺습니다.
+userId 열은 card 테이블의 userId 열과 외래 키(Foreign Key) 관계를 맺습니다.
+
+
+-- 메뉴 테이블
+create table menu (
+    menuId number primary key, --메뉴 고유 번호
+    menuname varchar2(30), --메뉴 이름
+    price number, --메뉴 가격
+    categorynum number, --메뉴 카테고리 번호
+    quantity number,
+    constraint fk_menu_category foreign key (categorynum) references category(categorynum)
+);
+
+--menuname 열은 메뉴의 이름을 저장합니다.
+--price 열은 메뉴의 가격을 저장합니다.
+--categorynum 열은 해당 메뉴의 카테고리를 나타내는데, 이는 Category 테이블의 categorynum 열과 외래 키(Foreign Key) 관계를 맺습니다.
+
+
+-- 음식카테고리 테이블
+create table category (
+    categorynum number PRIMARY KEY, --메뉴 카테고리 번호
+    categorymenu varchar2(15) not null
+);
+
+--categorynum 열은 음식 카테고리의 고유 식별자를 나타냅니다.
+--categorymenu 열은 음식 카테고리의 이름을 저장합니다.
+
+
+-- 장바구니 테이블
+
+CREATE TABLE Cart (
+    cartId NUMBER PRIMARY KEY,
+    menuId NUMBER,
+    price NUMBER,
+    quantity NUMBER,
+    CONSTRAINT fk_cart_menu FOREIGN KEY (menuId) REFERENCES menu(menuId)
+);
+
+--menuId 열은 장바구니에 담긴 메뉴의 고유 식별자를 나타냅니다. 이는 Menu 테이블의 menuId 열과 외래 키(Foreign Key) 관계를 맺습니다.
+--menuName 열은 장바구니에 담긴 메뉴의 이름을 저장합니다.
+--price 열은 장바구니에 담긴 메뉴의 가격을 저장합니다.
+--quantity 열은 장바구니에 담긴 메뉴의 수량을 저장합니다.
+
+
+--카드 정보를 담는 테이블
+create table card (
+    cardId varchar2(20) primary key, -- 카드 번호
+    userId varchar2(20) not null, -- 소유자 (users table의 id)번호
+    cardType varchar2(20) not null, -- 회사
+    expiryDate date not null, -- 유효 기간
+    cvc varchar2(4) not null, -- 카드 보안 코드
+    CONSTRAINT fk_card_user foreign key (userId) references users(userId)
+);
+
+
+--cardId 열은 카드의 고유 식별자를 나타냅니다.
+--userId 열은 카드 소유자의 사용자 식별자를 나타냅니다. 이는 Users 테이블의 userId 열과 외래 키(Foreign Key) 관계를 맺습니다.
+--cardType 열은 카드의 종류(회사 등)를 저장합니다.
+--expiryDate 열은 카드의 유효 기간을 나타냅니다.
+--cvc 열은 카드의 보안 코드를 저장합니다.
+
+-----------------------------------------------------------------------------------------------------------
+
+--Users 테이블과 Cart 테이블 간의 관계:
+--Users 테이블의 userId 열과 Cart 테이블의 userId 열 사이에 일대다(One-to-Many) 관계가 있습니다. 
+--하나의 사용자는 여러 개의 장바구니 아이템을 가질 수 있습니다.
+
+--Users 테이블과 Card 테이블 간의 관계:
+--Users 테이블의 userId 열과 Card 테이블의 userId 열 사이에 일대다(One-to-Many) 관계가 있습니다. 
+--하나의 사용자는 여러 개의 카드 정보를 가질 수 있습니다.
+
+--Menu 테이블과 Category 테이블 간의 관계:
+--Menu 테이블의 categorynum 열과 Category 테이블의 categorynum 열 사이에 일대다(One-to-Many) 관계가 있습니다. 
+--하나의 카테고리에는 여러 개의 메뉴가 속할 수 있습니다.
+
+--Cart 테이블과 Menu 테이블 간의 관계:
+--Cart 테이블의 menuId 열과 Menu 테이블의 menuId 열 사이에 일대일(One-to-One) 관계가 있습니다. 
+--장바구니에 담긴 각 항목은 메뉴의 고유 식별자를 참조합니다.
+
+--Card 테이블과 Users 테이블 간의 관계:
+--Card 테이블의 userId 열과 Users 테이블의 userId 열 사이에 일대다(One-to-Many) 관계가 있습니다. 
+--하나의 사용자는 여러 개의 카드를 가질 수 있습니다.
+
+--테이블 레코드 insert 순서 
+--1. users
+--2. category
+--3. menu
+--4. cart
+--5. card
+
+-----------------------------------------------------------------------------------------------------------
+--[users 테이블]
+insert into users(userid, userPasswd) values(park,1234);
+
+--[category 테이블]
+insert into category values(1, 'korean'); --1번 카테고리 한식
+insert into category values(2, 'chinese');--2번 카테고리 중식
+insert into category values(3, 'japanese');--3번 카테고리 일식
+insert into category values(4,'drink');--4번 카테고리 주류
+insert into category values(5, 'dessert');--5번 카테고리 디저트
+
+--[menu 테이블]
+
+--각 음식 종류 별 카테고리를 지정해서 분류함
+--한식(1): 불고기(1)-15000원 비빔밥(2)-10000원 김치찌개(3)-9000원 된짱지개(4)-9000원 갈비탕(5)-13000원
+--중식(2): 짜장면(6)-7000원 탕수육(7)-20000원 깐풍기(8)-23000원 짬뽕(9)-8000원 볶음밥(10)-7000원
+--일식(3): 초밥(11)-15000원 라멘(12)-10000원 우동(13)-7000원 돈까스(14)-9000원 텐동(15)-10000원
+--주류(4): 콜라(16)-2000원 사이다(17)-2000원 환타(18)-2000원 소주(19)-5000원 맥주(20)-5000원
+--디저트(5): 치즈케이크(21)-5500원 티라미수(22)-6000원 마카롱(23)-3000원 아이스크림(24)-3000원 와플(25)-3500원
+
+insert into menu values(1,'불고기',15000,1,1);
+insert into menu values(2,'비빔밥',10000,1,1);
+insert into menu values(3,'김치찌개',9000,1,1);
+insert into menu values(4,'된장찌개',9000,1,1);
+insert into menu values(5,'갈비탕',13000,1,1);
+
+insert into menu values(6,'짜장면',7000,2,1);
+insert into menu values(7,'탕수육',20000,2,1);
+insert into menu values(8,'깐풍기',23000,2,1);
+insert into menu values(9,'짬뽕',8000,2,1);
+insert into menu values(10,'볶음밥',7000,2,1);
+
+insert into menu values(11,'초밥',15000,3,1);
+insert into menu values(12,'라멘',10000,3,1);
+insert into menu values(13,'우동',7000,3,1);
+insert into menu values(14,'돈까스',9000,3,1);
+insert into menu values(15,'텐동',10000,3,1);
+
+insert into menu values(16,'콜라',2000,4,1);
+insert into menu values(17,'사이다',2000,4,1);
+insert into menu values(18,'환타',2000,4,1);
+insert into menu values(19,'소주',5000,4,1);
+insert into menu values(20,'맥주',5000,4,1);
+
+insert into menu values(21,'치즈케이크',5500,5,1);
+insert into menu values(22,'티라미수',6000,5,1);
+insert into menu values(23,'마카롱',3000,5,1);
+insert into menu values(24,'아이스크림',3000,5,1);
+insert into menu values(25,'밤양갱',3500,5,1);
+
+
+[card 테이블]
+insert into card values('1234-5678-1234-5678','park','신한카드','2029-03-07','123');
+insert into card values('1234-5678-5678-1234','park','국민카드','2031-03-27','456');
+insert into card values('5678-1234-1234-5678','kim','농협카드','2025-04-02','789');
+insert into card values('5678-5678-1234-1234','choi','카뱅카드','2024-10-22','012');
+insert into card values('1234-1234-1234-1234','park','하나카드','2030-08-24','345');
+insert into card values('5678-5678-5678-5678','park','국민카드','2022-03-07','678');
+insert into card values('5678-1234-1234-1234','park','신한카드','2021-07-17','901');
+
